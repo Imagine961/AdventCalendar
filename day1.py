@@ -30,3 +30,16 @@ print(code)
 
 
 ### OPTIMIZED SOLUTION ###
+
+for line in Input:
+    if line[0] == "R":
+        dial += int(line[1:])
+    elif line[0] == "L":
+        dial -= int(line[1:])
+    
+    dial = abs(dial) % 100 
+
+
+    
+
+    print(dial)
