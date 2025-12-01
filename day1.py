@@ -1,4 +1,4 @@
-input_file = open("input.txt", "r")
+input_file = open("day1input.txt", "r")
 Input = input_file.read().splitlines()
 
 
