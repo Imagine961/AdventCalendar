@@ -1,11 +1,19 @@
-# Read the entire file as a string
+# Read file
 with open("day2input.txt", "r") as f:
-    data = f.read().strip()   # .strip() removes newlines/spaces
+    input_data = f.read().strip()
 
-# Parse into (start, end) integer tuples
-ranges = []
-for item in data.split(","):
-    start, end = item.split("-")
-    ranges.append((int(start), int(end)))
+# Split into list
+inputArr = input_data.split(",")
 
-print(ranges)
+# Counter
+invalidID = 0
+
+for s in inputArr:
+    before_dash = s.split("-")[0]   # left side of '-'
+
+    # Check for repeated adjacent characters
+    for i in range(len(before_dash) - 1):
+        if before_dash[i] == before_dash[i + 1]:
+            invalidID += 1
+
+print(invalidID)
