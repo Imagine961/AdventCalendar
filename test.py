@@ -38,7 +38,8 @@ print(int(num4))
 print("---------------------")
 print(int(num1)+int(num2)+int(num3)+int(num4))
 
-'''
+
+
 line1 = ["123", "328", "51", "64"]
 line2 = ["45", "64", "387", "23"]
 line3 = ["6", "98", "215", "314"]
@@ -140,7 +141,6 @@ for i, op in enumerate(operation):
         int4 = int(num4)
         runningTally += (int1+int2+int3+int4)
 
-
 print(f"running Tally: {runningTally}")
 print("----------------------------")
 print(line1)
@@ -164,3 +164,8 @@ print(int(num3))
 print(int(num4))
 print("---------------------")
 print(int(num1)+int(num2)+int(num3)+int(num4))
+'''
+
+str = "XX1234"
+
+print(int(str))

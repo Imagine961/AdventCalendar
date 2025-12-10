@@ -32,77 +32,60 @@ for i, op in enumerate(operation):
 print(runningTally)
 
 ### Part 2 ###
-#WHAT EVEN IS THIS BRO, its like they just want to see the world burn
+#WHAT EVEN IS THIS BRO, its like they just want to see the world burn, sorry chat had to take a 4 day bender just to get over it and still cant solve it
+#Thanks to Matvei M. for this absolutely ridicoulous solution
+def trim(s):
+    return "".join(c for c in s if c != " ")
 
-runningTally = 0
+def get_numbers(grid, ops):
+    op_i = len(ops) - 1
+    res = 0
 
-for i, op in enumerate(operation):
-    int1 = 0
-    int2 = 0
-    int3 = 0
-    int4 = 0
+    # Start the partial value based on last operator
+    p = 1 if ops[op_i] == "*" else 0
 
-    num1 = 0
-    num2 = 0
-    num3 = 0
-    num4 = 0
+    for i in range(len(grid[0]) - 1, -1, -1):
 
-    line12 = line1[i]
-    line22 = line2[i]
-    line32 = line3[i]
-    line42 = line4[i]
+        # Build vertical number from column i
+        num = "".join(grid[r][i] for r in range(len(grid)))
+        num = trim(num)
 
-    #transforming numbers into a standard form
-    l1 = line12.ljust(4, "0")
-    l2 = line22.ljust(4, "0")
-    l3 = line32.ljust(4, "0")
-    l4 = line42.ljust(4, "0")
+        if num == "":
+            # Only move to next operator if not the first number
+            if op_i > 0:
+                op_i -= 1
+                res += p
+                p = 1 if ops[op_i] == "*" else 0
+            continue
 
-    #creating new nums based off outline
-    num1 = l1[3] + l2[3] + l3[3] + l4[3] 
-    num2 = l1[2] + l2[2] + l3[2] + l4[2] 
-    num3 = l1[1] + l2[1] + l3[1] + l4[1] 
-    num4 = l1[0] + l2[0] + l3[0] + l4[0] 
 
-    int1 = int(num1)
-    int2 = int(num2)
-    int3 = int(num3)
-    int4 = int(num4)
+        if ops[op_i] == "*":
+            p *= int(num)
+        else:
+            p += int(num)
 
-    if op == '*':
-        l1 = line12.zfill(4)
-        l2 = line22.zfill(4)
-        l3 = line32.zfill(4)
-        l4 = line42.zfill(4)
+    # Add final accumulation
+    res += p
+    return res
 
-        #creating new nums based off outline
-        num1 = l1[3] + l2[3] + l3[3] + l4[3] 
-        num2 = l1[2] + l2[2] + l3[2] + l4[2] 
-        num3 = l1[1] + l2[1] + l3[1] + l4[1] 
-        num4 = l1[0] + l2[0] + l3[0] + l4[0] 
 
-        int1 = int(num1)
-        int2 = int(num2)
-        int3 = int(num3)
-        int4 = int(num4)
-        runningTally += (int1*int2*int3*int4)
-        
-    elif op == '+':
-        l1 = line12.ljust(4, "0")
-        l2 = line22.ljust(4, "0")
-        l3 = line32.ljust(4, "0")
-        l4 = line42.ljust(4, "0")
+def main():
+    grid = []
+    ops = []
 
-        #creating new nums based off outline
-        num1 = l1[3] + l2[3] + l3[3] + l4[3] 
-        num2 = l1[2] + l2[2] + l3[2] + l4[2] 
-        num3 = l1[1] + l2[1] + l3[1] + l4[1] 
-        num4 = l1[0] + l2[0] + l3[0] + l4[0] 
+    with open("Day 6\day6input.txt", "r") as file:
+        for line in file:
+            line = line.rstrip("\n")
 
-        int1 = int(num1)
-        int2 = int(num2)
-        int3 = int(num3)
-        int4 = int(num4)
-        runningTally += (int1+int2+int3+int4)
+            if line.startswith("*") or line.startswith("+"):
+                ops.extend(line.split())
+                continue
 
-print(runningTally)
+            grid.append(line)
+
+    result = get_numbers(grid, ops)
+    print(f"\n{result}")
+
+
+if __name__ == "__main__":
+    main()
